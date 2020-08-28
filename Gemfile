@@ -14,4 +14,3 @@ end
 group :test, :development do
   gem 'pry'
 end
-
