@@ -4,9 +4,9 @@ module Models
   class Robot
     attr_accessor :coordinate, :direction
 
-    def initialise(coordinate, direction)
+    def initialize(coordinate, direction)
       @coordinate = coordinate
-      @direciton = direction
+      @direction = direction
     end
   end
 end
