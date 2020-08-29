@@ -3,6 +3,7 @@
 source 'https://rubygems.org'
 
 gem 'dry-cli'
+gem 'dry-monads'
 
 group :test do
   gem 'rspec'
