@@ -1,34 +1,19 @@
 # frozen_string_literal: true
 
-require 'models/coordinate'
+require 'models/rectangle'
 
 module Models
   class Table
-    attr_reader :coordinate, :height, :width
+    attr_reader :shape
 
-    def initialize(coordinate, width, height)
-      @coordinate = coordinate
-      @height = height
-      @width = width
+    DEFAULT_SHAPE = Models::Rectangle.new
+
+    def initialize(shape = DEFAULT_SHAPE)
+      @shape = shape
     end
 
-    def coordinates
-      @coordinates ||= [
-        coordinate,
-        coordinate + Models::Coordinate.new(width_point, 0),
-        coordinate + Models::Coordinate.new(0, height_point),
-        coordinate + Models::Coordinate.new(width_point, height_point)
-      ]
-    end
-
-    private
-
-    def width_point
-      width - 1
-    end
-
-    def height_point
-      height - 1
+    def contain?(point)
+      shape.coordinates.include? point
     end
   end
 end
