@@ -12,11 +12,9 @@ module Commands
       include Dry::Monads[:result]
 
       def call(robot:)
-        if Constants::DIRECTIONS.index(robot.direction)
-          direction_index = (Constants::DIRECTIONS.index(robot.direction) + 1) % Constants::DIRECTIONS.size
+        new_direction = Services::RotateDirection.call(Services::RotateDirection::RIGHT, robot.direction)
 
-          robot.direction = Constants::DIRECTIONS[direction_index]
-        end
+        robot.direction = new_direction unless robot.direction == new_direction
 
         Success(robot)
       end

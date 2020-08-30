@@ -5,6 +5,7 @@ require 'dry/monads/do'
 require 'models/robot'
 require 'models/coordinate'
 require 'constants/direction'
+require 'services/rotate_direction'
 
 module Commands
   class Left
@@ -12,11 +13,9 @@ module Commands
       include Dry::Monads[:result]
 
       def call(robot:)
-        if Constants::DIRECTIONS.index(robot.direction)
-          direction_index = (Constants::DIRECTIONS.index(robot.direction) - 1) % Constants::DIRECTIONS.size
+        new_direction = Services::RotateDirection.call(Services::RotateDirection::LEFT, robot.direction)
 
-          robot.direction = Constants::DIRECTIONS[direction_index]
-        end
+        robot.direction = new_direction unless robot.direction == new_direction
 
         Success(robot)
       end
