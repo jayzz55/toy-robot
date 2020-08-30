@@ -9,8 +9,8 @@ module Commands
     extend Dry::Monads[:result]
 
     class << self
-      def call(x_coord:, y_coord:, direction:, table:)
-        position = Models::Coordinate.new(x_coord, y_coord)
+      def call(x:, y:, direction:, table:)
+        position = Models::Coordinate.new(x, y)
 
         if table.contain? position
           robot = Models::Robot.new(
