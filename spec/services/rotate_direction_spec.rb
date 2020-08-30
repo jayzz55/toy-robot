@@ -13,40 +13,40 @@ RSpec.describe Services::RotateDirection do
       context 'when direction is NORTH' do
         let(:direction) { 'NORTH' }
 
-        it 'returns WEST' do
-          expect(call).to eq 'WEST'
+        it 'returns a Some of WEST' do
+          expect(call.value!).to eq 'WEST'
         end
       end
 
       context 'when direction is EAST' do
         let(:direction) { 'EAST' }
 
-        it 'returns NORTH' do
-          expect(call).to eq 'NORTH'
+        it 'returns a Some of NORTH' do
+          expect(call.value!).to eq 'NORTH'
         end
       end
 
       context 'when direction is SOUTH' do
         let(:direction) { 'SOUTH' }
 
-        it 'returns EAST' do
-          expect(call).to eq 'EAST'
+        it 'returns a Some of EAST' do
+          expect(call.value!).to eq 'EAST'
         end
       end
 
       context 'when direction is WEST' do
         let(:direction) { 'WEST' }
 
-        it 'returns SOUTH' do
-          expect(call).to eq 'SOUTH'
+        it 'returns a Some of SOUTH' do
+          expect(call.value!).to eq 'SOUTH'
         end
       end
 
       context 'when direction is invalid' do
         let(:direction) { 'SOUTHEAST' }
 
-        it 'returns the input direction as it is' do
-          expect(call).to eq 'SOUTHEAST'
+        it 'returns a None' do
+          expect(call).to be_a Dry::Monads::None
         end
       end
     end
@@ -57,41 +57,50 @@ RSpec.describe Services::RotateDirection do
       context 'when direction is NORTH' do
         let(:direction) { 'NORTH' }
 
-        it 'returns EAST' do
-          expect(call).to eq 'EAST'
+        it 'returns a Some EAST' do
+          expect(call.value!).to eq 'EAST'
         end
       end
 
       context 'when direction is EAST' do
         let(:direction) { 'EAST' }
 
-        it 'returns SOUTH' do
-          expect(call).to eq 'SOUTH'
+        it 'returns a Some SOUTH' do
+          expect(call.value!).to eq 'SOUTH'
         end
       end
 
       context 'when direction is SOUTH' do
         let(:direction) { 'SOUTH' }
 
-        it 'returns WEST' do
-          expect(call).to eq 'WEST'
+        it 'returns a Some of WEST' do
+          expect(call.value!).to eq 'WEST'
         end
       end
 
       context 'when direction is WEST' do
         let(:direction) { 'WEST' }
 
-        it 'returns NORTH' do
-          expect(call).to eq 'NORTH'
+        it 'returns a Some of NORTH' do
+          expect(call.value!).to eq 'NORTH'
         end
       end
 
       context 'when direction is invalid' do
         let(:direction) { 'SOUTHEAST' }
 
-        it 'returns the input direction as it is' do
-          expect(call).to eq 'SOUTHEAST'
+        it 'returns a None' do
+          expect(call).to be_a Dry::Monads::None
         end
+      end
+    end
+
+    context 'when rotation_direction is RIGHT' do
+      let(:rotation_direction) { 'INVALID' }
+      let(:direction) { 'NORTH' }
+
+      it 'returns a None' do
+        expect(call).to be_a Dry::Monads::None
       end
     end
   end

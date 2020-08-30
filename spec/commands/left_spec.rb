@@ -63,12 +63,8 @@ RSpec.describe Commands::Left do
     context 'when robot is currently facing invalid direction' do
       let(:direction) { 'SOUTHEAST' }
 
-      it 'returns a robot instance wrapped in a Success Result' do
-        expect(call.value!).to eq robot
-      end
-
-      it 'does NOT change the direction state of the robot' do
-        expect { call }.not_to change { robot.direction }
+      it 'returns a Failure Result with a message of :invalid_direction' do
+        expect(call.failure).to eq :invalid_direction
       end
     end
   end

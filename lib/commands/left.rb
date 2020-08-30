@@ -11,11 +11,14 @@ module Commands
   class Left
     class << self
       include Dry::Monads[:result]
+      include Dry::Monads::Do.for(:call)
 
       def call(robot:)
-        new_direction = Services::RotateDirection.call(Services::RotateDirection::LEFT, robot.direction)
+        new_direction = yield Services::RotateDirection
+                        .call(Services::RotateDirection::LEFT, robot.direction)
+                        .to_result(:invalid_direction)
 
-        robot.direction = new_direction unless robot.direction == new_direction
+        robot.direction = new_direction
 
         Success(robot)
       end

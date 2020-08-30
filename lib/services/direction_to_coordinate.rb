@@ -6,6 +6,8 @@ require 'models/coordinate'
 
 module Services
   class DirectionToCoordinate
+    extend Dry::Monads[:maybe]
+
     MAPPINGS = {
       Constants::NORTH => [0, 1],
       Constants::EAST => [1, 0],
@@ -15,7 +17,7 @@ module Services
 
     class << self
       def call(direction)
-        Models::Coordinate.new(*MAPPINGS.fetch(direction, [0, 0]))
+        Maybe(MAPPINGS[direction]).fmap { |coord| Models::Coordinate.new(*coord) }
       end
     end
   end

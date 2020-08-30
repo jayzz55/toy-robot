@@ -41,12 +41,8 @@ RSpec.describe Commands::Move do
       let(:direction) { 'NORTHWEST' }
       let(:robot) { Models::Robot.new(robot_position, direction) }
 
-      it 'returns a robot instance wrapped in a Success Result' do
-        expect(call.value!).to eq robot
-      end
-
-      it 'does NOT change the coordinate position state of the robot' do
-        expect { call }.not_to change { robot.coordinate }
+      it 'returns a Failure Result with a message of :invalid_movement' do
+        expect(call.failure).to eq :invalid_movement
       end
     end
   end

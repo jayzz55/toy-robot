@@ -13,7 +13,8 @@ module Commands
       include Dry::Monads::Do.for(:call)
 
       def call(robot:, table:)
-        new_position = robot.coordinate + Services::DirectionToCoordinate.call(robot.direction)
+        new_coordinate = yield Services::DirectionToCoordinate.call(robot.direction).to_result(:invalid_movement)
+        new_position = robot.coordinate + new_coordinate
 
         if table.contain? new_position
           robot.coordinate = new_position
