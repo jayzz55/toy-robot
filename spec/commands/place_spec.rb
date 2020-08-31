@@ -6,9 +6,10 @@ require 'models/coordinate'
 require 'models/table'
 
 RSpec.describe Commands::Place do
-  describe '.call' do
-    subject(:call) { described_class.call(x: x, y: y, direction: direction, table: table, app: app) }
+  describe '#call' do
+    subject(:call) { described_class.new(table: table, app: app).call(robot: robot) }
 
+    let(:robot) { Models::Robot.new(Models::Coordinate.new(x, y), direction) }
     let(:app) { Struct.new(:robot).new }
     let(:direction) { 'NORTH' }
     let(:table) { Models::Table.new }
@@ -18,7 +19,7 @@ RSpec.describe Commands::Place do
       let(:y) { 0 }
 
       it 'returns a robot instance wrapped in a Success Result' do
-        expect(call.value!).to eq Models::Robot.new(Models::Coordinate.new(x, y), direction)
+        expect(call.value!).to eq robot
       end
 
       it 'sets the robot state of the app' do

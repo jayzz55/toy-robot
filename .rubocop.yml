@@ -13,6 +13,7 @@ AllCops:
   Exclude:
     - 'spec/*.rb'
     - 'spec/**/*.rb'
+    - 'bin/*'
 
 Style/Documentation:
   Enabled: false

@@ -1,11 +1,9 @@
 # frozen_string_literal: true
 
 require 'dry/monads'
+require 'dry/monads/do'
 require 'constants/direction'
 require 'models/coordinate'
-
-require 'dry/monads'
-require 'dry/monads/do'
 
 module Services
   class RotateDirection

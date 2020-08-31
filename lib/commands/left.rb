@@ -9,19 +9,23 @@ require 'services/rotate_direction'
 
 module Commands
   class Left
-    class << self
-      include Dry::Monads[:result]
-      include Dry::Monads::Do.for(:call)
+    include Dry::Monads[:result]
+    include Dry::Monads::Do.for(:call)
 
-      def call(robot:)
-        new_direction = yield Services::RotateDirection
-                        .call(Services::RotateDirection::LEFT, robot.direction)
-                        .to_result(:invalid_direction)
+    attr_reader :robot
 
-        robot.direction = new_direction
+    def initialize(robot:)
+      @robot = robot
+    end
 
-        Success(robot)
-      end
+    def call
+      new_direction = yield Services::RotateDirection
+                      .call(Services::RotateDirection::LEFT, robot.direction)
+                      .to_result(:invalid_direction)
+
+      robot.direction = new_direction
+
+      Success(robot)
     end
   end
 end

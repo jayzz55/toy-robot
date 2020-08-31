@@ -9,7 +9,7 @@ class Main
   class << self
     def call(input_handler: Handlers::StdinHandler, output: $stdout)
       app = App.new(output: output)
-      input_handler.call() do |input_line|
+      input_handler.call do |input_line|
         Handlers::WithErrorHandling.call(output: output) do
           app.call(input_line)
         end

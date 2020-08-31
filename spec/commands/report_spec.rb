@@ -7,8 +7,8 @@ require 'models/coordinate'
 require 'stringio'
 
 RSpec.describe Commands::Report do
-  describe '.call' do
-    subject(:call) { described_class.call(robot: robot, representer: representer, output: output) }
+  describe '#call' do
+    subject(:call) { described_class.new(robot: robot, representer: representer, output: output).call() }
 
     let(:representer) { lambda { |robot| "robot has #{robot.coordinate.x},#{robot.coordinate.y},#{robot.direction}" } }
     let(:output) { StringIO.new }

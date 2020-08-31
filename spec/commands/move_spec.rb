@@ -6,8 +6,8 @@ require 'models/coordinate'
 require 'models/table'
 
 RSpec.describe Commands::Move do
-  describe '.call' do
-    subject(:call) { described_class.call(robot: robot, table: table) }
+  describe '#call' do
+    subject(:call) { described_class.new(robot: robot, table: table).call() }
 
     let(:table) { Models::Table.new }
 

@@ -6,22 +6,21 @@ require 'models/coordinate'
 
 module Commands
   class Place
-    extend Dry::Monads[:result]
+    include Dry::Monads[:result]
 
-    class << self
-      def call(x:, y:, direction:, table:, app:)
-        position = Models::Coordinate.new(x, y)
+    attr_reader :table, :app
 
-        if table.contain? position
-          robot = Models::Robot.new(
-            position,
-            direction
-          )
-          app.robot = robot
-          Success(robot)
-        else
-          Failure(:invalid_placement)
-        end
+    def initialize(table:, app:)
+      @table = table
+      @app = app
+    end
+
+    def call(robot:)
+      if table.contain? robot.coordinate
+        app.robot = robot
+        Success(robot)
+      else
+        Failure(:invalid_placement)
       end
     end
   end

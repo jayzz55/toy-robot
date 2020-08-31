@@ -6,8 +6,8 @@ require 'models/robot'
 require 'models/coordinate'
 
 RSpec.describe Commands::Left do
-  describe '.call' do
-    subject(:call) { described_class.call(robot: robot) }
+  describe '#call' do
+    subject(:call) { described_class.new(robot: robot).call() }
 
     let(:robot_position) { Models::Coordinate.new(0, 0) }
     let(:robot) { Models::Robot.new(robot_position, direction) }
