@@ -2,7 +2,7 @@
 
 require 'dry/monads'
 
-module Services
+module Handlers
   class WithErrorHandling
     class << self
       include Dry::Monads[:try]

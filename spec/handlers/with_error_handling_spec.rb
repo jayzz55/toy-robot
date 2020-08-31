@@ -3,9 +3,9 @@
 require 'spec_helper'
 require 'dry/monads'
 
-require 'services/with_error_handling'
+require 'handlers/with_error_handling'
 
-RSpec.describe Services::WithErrorHandling do
+RSpec.describe Handlers::WithErrorHandling do
   include Dry::Monads[:result]
 
   subject(:error_handling) { described_class.call(output: output) { result } }
