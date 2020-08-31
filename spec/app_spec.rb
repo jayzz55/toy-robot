@@ -8,32 +8,32 @@ require 'models/table'
 require 'stringio'
 
 RSpec.describe App do
-  let(:stdout) { StringIO.new }
+  let(:output) { StringIO.new }
   let(:table) { Models::Table.new }
   let(:robot_position) { Models::Coordinate.new(1, 2) }
   let(:direction) { 'EAST' }
   let(:robot) { Models::Robot.new(robot_position, direction) }
 
   describe '.new' do
-    subject(:app) { described_class.new(robot: robot, table: table, stdout: stdout) }
+    subject(:app) { described_class.new(robot: robot, table: table, output: output) }
 
     its(:robot) { should eq(robot) }
     its(:table) { should eq(table) }
-    its(:stdout) { should eq(stdout) }
+    its(:output) { should eq(output) }
 
     context 'with default value' do
       subject { described_class.new() }
 
       its(:robot) { should eq(nil) }
       its(:table) { should eq(App::DEFAULT_TABLE) }
-      its(:stdout) { should eq($stdout) }
+      its(:output) { should eq($stdout) }
     end
   end
 
   describe '#call' do
     subject(:call) { app.call(input_string) }
 
-    let(:app) { described_class.new(robot: robot, table: table, stdout: stdout) }
+    let(:app) { described_class.new(robot: robot, table: table, output: output) }
 
     context 'with an invalid input_string' do
       context 'when input_string is invalid PLACE command' do
@@ -163,8 +163,8 @@ RSpec.describe App do
             expect(call.value!).to eq(app)
           end
 
-          it 'updates the stdout state with the result of the REPORT command' do
-            expect { call }.to change { stdout.string }.from('').to("Output: 1,2,EAST\n")
+          it 'updates the output state with the result of the REPORT command' do
+            expect { call }.to change { output.string }.from('').to("Output: 1,2,EAST\n")
           end
         end
       end

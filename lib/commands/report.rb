@@ -9,8 +9,8 @@ module Commands
     class << self
       include Dry::Monads[:result]
 
-      def call(robot:, representer: Representers::StringRepresenter, stdout: $stdout)
-        stdout.puts representer.call(robot)
+      def call(robot:, representer: Representers::StringRepresenter, output: $stdout)
+        output.puts representer.call(robot)
         Success()
       end
     end

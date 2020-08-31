@@ -18,13 +18,13 @@ class App
 
   DEFAULT_TABLE = Models::Table.new
 
-  attr_reader :table, :stdout
+  attr_reader :table, :output
   attr_accessor :robot
 
-  def initialize(robot: nil, table: DEFAULT_TABLE, stdout: $stdout)
+  def initialize(robot: nil, table: DEFAULT_TABLE, output: $stdout)
     @robot = robot
     @table = table
-    @stdout = stdout
+    @output = output
   end
 
   def call(input_string)
@@ -64,7 +64,7 @@ class App
     when Constants::RIGHT
       Commands::Right.call(robot: robot)
     when Constants::REPORT
-      Commands::Report.call(robot: robot, stdout: stdout)
+      Commands::Report.call(robot: robot, output: output)
     end
   end
 

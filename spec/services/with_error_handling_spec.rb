@@ -8,9 +8,9 @@ require 'services/with_error_handling'
 RSpec.describe Services::WithErrorHandling do
   include Dry::Monads[:result]
 
-  subject(:error_handling) { described_class.call(stdout: stdout) { result } }
+  subject(:error_handling) { described_class.call(output: output) { result } }
 
-  let(:stdout) { StringIO.new }
+  let(:output) { StringIO.new }
 
   context 'when result return a Success' do
     let(:result) { Success() }
@@ -19,8 +19,8 @@ RSpec.describe Services::WithErrorHandling do
       expect(error_handling).to eq :ok
     end
 
-    it 'does NOT puts anything to stdout' do
-      expect { error_handling }.not_to change { stdout.string }
+    it 'does NOT puts anything to output' do
+      expect { error_handling }.not_to change { output.string }
     end
   end
 
@@ -31,8 +31,8 @@ RSpec.describe Services::WithErrorHandling do
       expect(error_handling).to eq :error
     end
 
-    it 'calls puts on the stdout with "Sorry, Placement is invalid."' do
-      expect { error_handling }.to change { stdout.string }.from('').to("Sorry, Placement is invalid.\n")
+    it 'calls puts on the output with "Sorry, Placement is invalid."' do
+      expect { error_handling }.to change { output.string }.from('').to("Sorry, Placement is invalid.\n")
     end
   end
   context 'when result return a Failure(:invalid_movement)' do
@@ -42,8 +42,8 @@ RSpec.describe Services::WithErrorHandling do
       expect(error_handling).to eq :error
     end
 
-    it 'calls puts on the stdout with "Sorry, it is impossible to move."' do
-      expect { error_handling }.to change { stdout.string }.from('').to("Sorry, it is impossible to move.\n")
+    it 'calls puts on the output with "Sorry, it is impossible to move."' do
+      expect { error_handling }.to change { output.string }.from('').to("Sorry, it is impossible to move.\n")
     end
   end
   context 'when result return a Failure(:invalid_direction)' do
@@ -53,8 +53,8 @@ RSpec.describe Services::WithErrorHandling do
       expect(error_handling).to eq :error
     end
 
-    it 'calls puts on the stdout with "Something is wrong with the direction."' do
-      expect { error_handling }.to change { stdout.string }.from('').to("Something is wrong with the direction.\n")
+    it 'calls puts on the output with "Something is wrong with the direction."' do
+      expect { error_handling }.to change { output.string }.from('').to("Something is wrong with the direction.\n")
     end
   end
   context 'when result return a Failure(:missing_robot)'do
@@ -64,8 +64,8 @@ RSpec.describe Services::WithErrorHandling do
       expect(error_handling).to eq :error
     end
 
-    it 'calls puts on the stdout with "No Robot Found! Need to PLACE a robot first."' do
-      expect { error_handling }.to change { stdout.string }.from('').to("No Robot Found! Need to PLACE a robot first.\n")
+    it 'calls puts on the output with "No Robot Found! Need to PLACE a robot first."' do
+      expect { error_handling }.to change { output.string }.from('').to("No Robot Found! Need to PLACE a robot first.\n")
     end
   end
   context 'when result return a Failure(:invalid_input)' do
@@ -75,8 +75,8 @@ RSpec.describe Services::WithErrorHandling do
       expect(error_handling).to eq :error
     end
 
-    it 'calls puts on the stdout with "Sorry, provided input is invalid."' do
-      expect { error_handling }.to change { stdout.string }.from('').to("Sorry, provided input is invalid.\n")
+    it 'calls puts on the output with "Sorry, provided input is invalid."' do
+      expect { error_handling }.to change { output.string }.from('').to("Sorry, provided input is invalid.\n")
     end
   end
   context 'when result return a Failure with other message' do
@@ -86,8 +86,8 @@ RSpec.describe Services::WithErrorHandling do
       expect(error_handling).to eq :error
     end
 
-    it 'calls puts on the stdout with "Oops, this is embarassing, some unexpected error has occured."' do
-      expect { error_handling }.to change { stdout.string }.from('').to("Oops, this is embarassing, some unexpected error has occured.\n")
+    it 'calls puts on the output with "Oops, this is embarassing, some unexpected error has occured."' do
+      expect { error_handling }.to change { output.string }.from('').to("Oops, this is embarassing, some unexpected error has occured.\n")
     end
   end
   context 'when result raises and unexpected exception' do
@@ -97,8 +97,8 @@ RSpec.describe Services::WithErrorHandling do
       expect(error_handling).to eq :error
     end
 
-    it 'calls puts on the stdout with "Oops, this is embarassing, some unexpected error has occured."' do
-      expect { error_handling }.to change { stdout.string }.from('').to("Oops, this is embarassing, some unexpected error has occured.\n")
+    it 'calls puts on the output with "Oops, this is embarassing, some unexpected error has occured."' do
+      expect { error_handling }.to change { output.string }.from('').to("Oops, this is embarassing, some unexpected error has occured.\n")
     end
   end
 end

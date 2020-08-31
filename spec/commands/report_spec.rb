@@ -8,10 +8,10 @@ require 'stringio'
 
 RSpec.describe Commands::Report do
   describe '.call' do
-    subject(:call) { described_class.call(robot: robot, representer: representer, stdout: stdout) }
+    subject(:call) { described_class.call(robot: robot, representer: representer, output: output) }
 
     let(:representer) { lambda { |robot| "robot has #{robot.coordinate.x},#{robot.coordinate.y},#{robot.direction}" } }
-    let(:stdout) { StringIO.new }
+    let(:output) { StringIO.new }
     let(:robot_position) { Models::Coordinate.new(1, 2) }
     let(:direction) { 'EAST' }
     let(:robot) { Models::Robot.new(robot_position, direction) }
@@ -24,8 +24,8 @@ RSpec.describe Commands::Report do
         expect(call).to be_a Dry::Monads::Success
       end
 
-      it 'calls puts on the stdout with the representer' do
-        expect { call }.to change { stdout.string }.from('').to("robot has 1,2,EAST\n")
+      it 'calls puts on the output with the representer' do
+        expect { call }.to change { output.string }.from('').to("robot has 1,2,EAST\n")
       end
     end
   end
