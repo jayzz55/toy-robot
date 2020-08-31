@@ -8,6 +8,7 @@ require 'validators/command_string'
 require 'validators/args_string'
 require 'services/parse_input_string'
 require 'services/generate_command'
+require 'representers/string_representer'
 
 class App
   include Dry::Monads[:result]
@@ -15,13 +16,14 @@ class App
 
   DEFAULT_TABLE = Models::Table.new
 
-  attr_reader :table, :output
+  attr_reader :table, :output, :representer
   attr_accessor :robot
 
-  def initialize(robot: nil, table: DEFAULT_TABLE, output: $stdout)
+  def initialize(robot: nil, table: DEFAULT_TABLE, output: $stdout, representer: Representers::StringRepresenter)
     @robot = robot
     @table = table
     @output = output
+    @representer = representer
   end
 
   def call(input_string)

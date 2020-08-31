@@ -4,9 +4,19 @@ require 'models/rectangle'
 
 module Models
   class Table
-    attr_reader :shape
-
     DEFAULT_SHAPE = Models::Rectangle.new
+
+    def self.default_from(width:, height:)
+      new(
+        Models::Rectangle.new(
+          Models::Rectangle::DEFAULT_COORDINATE,
+          width,
+          height
+        )
+      )
+    end
+
+    attr_reader :shape
 
     def initialize(shape = DEFAULT_SHAPE)
       @shape = shape

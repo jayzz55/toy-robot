@@ -1,0 +1,16 @@
+#!/usr/bin/env ruby
+
+require 'bundler/setup'
+require 'pry'
+
+$LOAD_PATH.unshift File.expand_path('.', 'lib')
+
+require 'main'
+require 'handlers/option_parser'
+
+opts = Handlers::OptionParser.call(ARGV)
+begin
+  Main.call(height: opts.height, width: opts.width)
+rescue Interrupt
+  puts "\nExiting..."
+end

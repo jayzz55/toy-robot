@@ -7,6 +7,22 @@ require 'models/rectangle'
 require 'models/coordinate'
 
 RSpec.describe Models::Table do
+  describe '.default_from' do
+    subject(:table) { described_class.default_from(width: 10, height: 20) }
+
+    it 'returns a rectangle table with the specified width' do
+      expect(table.shape.width).to eq 10
+    end
+
+    it 'returns a rectangle table with the specified height' do
+      expect(table.shape.height).to eq 20
+    end
+
+    it 'returns a rectangle table with the default coordinate' do
+      expect(table.shape.coordinate).to eq Models::Rectangle::DEFAULT_COORDINATE
+    end
+  end
+
   describe '.new' do
     subject { described_class.new(shape) }
 
