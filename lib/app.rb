@@ -34,6 +34,7 @@ class App
     yield validate_command(command_string)
 
     args = parse_args(command_string, args_string)
+
     yield execute_command(command_string, args)
 
     Success(self)
@@ -45,18 +46,17 @@ class App
     case command_string
     when Constants::PLACE
       x, y, direction = args_string.split(',')
-      [x.to_i, y.to_i, direction]
+      { x: x.to_i, y: y.to_i, direction: direction }
     else
-      args_string
+      {}
     end
   end
 
-  def execute_command(command_string, args)
+  def execute_command(command_string, input_args)
     case command_string
     when Constants::PLACE
-      x, y, direction = args
-      Commands::Place.call(x: x, y: y, direction: direction, table: table)
-                     .fmap { |new_robot| self.robot = new_robot }
+      x, y, direction = input_args.values_at(:x, :y, :direction)
+      Commands::Place.call(x: x, y: y, direction: direction, table: table, app: self)
     when Constants::MOVE
       Commands::Move.call(robot: robot, table: table)
     when Constants::LEFT
@@ -69,9 +69,8 @@ class App
   end
 
   def validate_input_string(command_string, args_string)
-    Validators::CommandString
-      .call(command_string)
-      .and(Validators::ArgsString.call(command_string, args_string))
+    Validators::CommandString.call(command_string)
+                             .and(Validators::ArgsString.call(command_string, args_string))
   end
 
   def validate_command(command_string)

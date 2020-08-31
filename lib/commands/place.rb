@@ -9,7 +9,7 @@ module Commands
     extend Dry::Monads[:result]
 
     class << self
-      def call(x:, y:, direction:, table:)
+      def call(x:, y:, direction:, table:, app:)
         position = Models::Coordinate.new(x, y)
 
         if table.contain? position
@@ -17,6 +17,7 @@ module Commands
             position,
             direction
           )
+          app.robot = robot
           Success(robot)
         else
           Failure(:invalid_placement)
