@@ -5,11 +5,20 @@ module Handlers
     EXIT = 'EXIT'
 
     class << self
-      def call(stdin: $stdin)
+      def call(stdin: $stdin, kernel: Kernel)
+        puts '#################################'
+        puts 'Available Commands:'
+        puts '* PLACE 0,0,NORTH'
+        puts '* MOVE'
+        puts '* LEFT'
+        puts '* RIGHT'
+        puts '* REPORT'
+        puts 'Type "exit" to exit the app.'
+        puts '#################################'
+
         while (input = stdin.gets)
-          Kernel.exit(false) if input.upcase == EXIT
+          kernel.exit(false) if input.chomp.upcase == EXIT
           result = yield input.chomp
-          Kernel.exit(false) if result == :error
         end
       end
     end
