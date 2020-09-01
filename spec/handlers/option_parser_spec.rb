@@ -7,7 +7,9 @@ require 'handlers/option_parser'
 
 RSpec.describe Handlers::OptionParser do
   describe '.call' do
-    subject(:call) { described_class.call(argv) }
+    subject(:call) { described_class.call(argv, kernel) }
+
+    let(:kernel) { class_double('Kernel', exit: '', puts: '') }
 
     context 'with out any argv being passed' do
       let(:argv) { [] }
@@ -30,6 +32,16 @@ RSpec.describe Handlers::OptionParser do
 
       it 'returns Options with the specified height' do
         expect(call).to have_attributes(width: 5, height: 10)
+      end
+    end
+
+    context 'with -h argv being passed' do
+      let(:argv) { ['-h'] }
+
+      it 'calls Kernel.exit' do
+        call
+
+        expect(kernel).to have_received(:exit)
       end
     end
   end

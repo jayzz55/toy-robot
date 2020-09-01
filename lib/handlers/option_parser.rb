@@ -19,7 +19,7 @@ module Handlers
   class OptionParser
     class << self
       # rubocop:disable Metrics/MethodLength
-      def call(options)
+      def call(options, kernel = Kernel)
         args = Options.new
 
         opt_parser = ::OptionParser.new do |opts|
@@ -34,8 +34,8 @@ module Handlers
           end
 
           opts.on('-h', '--help', 'Prints this help') do
-            puts opts
-            exit
+            kernel.puts opts
+            kernel.exit
           end
         end
 
