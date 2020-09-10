@@ -8,16 +8,17 @@ module Commands
   class Report
     include Dry::Monads[:result]
 
-    attr_reader :robot, :representer, :output
+    attr_reader :robot, :representer, :output, :table
 
-    def initialize(robot:, representer: Representers::StringRepresenter, output: $stdout)
+    def initialize(robot:, representer: Representers::StringRepresenter, output: $stdout, table:)
       @robot = robot
       @representer = representer
       @output = output
+      @table = table
     end
 
     def call
-      output.puts representer.call(robot)
+      output.puts representer.call(robot, table)
       Success()
     end
   end

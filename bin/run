@@ -10,7 +10,7 @@ require 'handlers/option_parser'
 
 opts = Handlers::OptionParser.call(ARGV)
 begin
-  Main.call(height: opts.height, width: opts.width)
+  Main.call(height: opts.height, width: opts.width, render_table: opts.render_table)
 rescue Interrupt
   puts "\nExiting..."
 end

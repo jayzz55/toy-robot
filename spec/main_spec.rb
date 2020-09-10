@@ -14,10 +14,12 @@ RSpec.describe Main do
         input_handler: input_handler,
         output: output,
         width: width,
-        height: height
+        height: height,
+        render_table: render_table
       )
     end
 
+    let(:render_table) { false }
     let(:input_handler) { Handlers::StdinHandler.new(stdin) }
     let(:stdin) { StringIO.new }
     let(:output) { StringIO.new }
@@ -45,6 +47,24 @@ RSpec.describe Main do
       it 'returns Output: 3,3,NORTH' do
         call
         expect(output.string).to eq "Output: 3,3,NORTH\n"
+      end
+    end
+
+    context 'with table renderer' do
+      let(:render_table) { true }
+
+      context 'scenario in spec/fixtures/input_1.txt' do
+        let(:stdin) { StringIO.new(File.read("spec/fixtures/input_1.txt")) }
+        it 'returns Output: 0,1,NORTH' do
+          call
+          expect(output.string).to eq <<~TEXT
+          .....
+          .....
+          .....
+          ^....
+          .....
+          TEXT
+        end
       end
     end
   end

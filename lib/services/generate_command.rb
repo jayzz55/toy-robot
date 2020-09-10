@@ -21,7 +21,7 @@ module Services
         when Constants::RIGHT
           Commands::Right.new(robot: app.robot)
         when Constants::REPORT
-          Commands::Report.new(robot: app.robot, output: app.output, representer: app.representer)
+          Commands::Report.new(robot: app.robot, output: app.output, representer: app.representer, table: app.table)
         end
       end
     end

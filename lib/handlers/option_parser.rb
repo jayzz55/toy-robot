@@ -4,14 +4,16 @@ require 'optparse'
 require 'models/rectangle'
 
 class Options
-  attr_accessor :height, :width
+  attr_accessor :height, :width, :render_table
 
   def initialize(
     height: Models::Rectangle::DEFAULT_HEIGHT,
-    width: Models::Rectangle::DEFAULT_WIDTH
+    width: Models::Rectangle::DEFAULT_WIDTH,
+    render_table: false
   )
     @height = height
     @width = width
+    @render_table = render_table
   end
 end
 
@@ -31,6 +33,10 @@ module Handlers
 
           opts.on('--height=HEIGHT', Integer, 'Height of the table in Integer') do |height|
             args.height = height
+          end
+
+          opts.on('--render_table', 'Render table') do
+            args.render_table = true
           end
 
           opts.on('-h', '--help', 'Prints this help') do
