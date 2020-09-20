@@ -47,5 +47,43 @@ RSpec.describe Main do
         expect(output.string).to eq "Output: 3,3,NORTH\n"
       end
     end
+
+    context 'scenario in spec/fixtures/input_4.txt' do
+      let(:stdin) { StringIO.new(File.read("spec/fixtures/input_4.txt")) }
+      it 'returns Output: 1,0,EAST' do
+        call
+        expect(output.string).to eq "Output: 1,0,EAST\n"
+      end
+    end
+
+    context 'scenario in spec/fixtures/input_5.txt' do
+      let(:stdin) { StringIO.new(File.read("spec/fixtures/input_5.txt")) }
+      it 'returns Output: 0,0,EAST' do
+        call
+        expect(output.string).to include "Output: 0,0,EAST\n"
+      end
+    end
+
+    context 'scenario in spec/fixtures/input_6.txt' do
+      let(:stdin) { StringIO.new(File.read("spec/fixtures/input_6.txt")) }
+      it 'returns Output: 0,0,EAST' do
+        call
+        expect(output.string).to include "Sorry, Placement is invalid."
+      end
+    end
+
+    context 'scenario in spec/fixtures/input_7.txt' do
+      let(:stdin) { StringIO.new(File.read("spec/fixtures/input_7.txt")) }
+      it 'returns Output' do
+        call
+        expect(output.string).to include <<~TEXT
+        0,0
+        0,1
+        0,2
+        1,2
+        2,2
+        TEXT
+      end
+    end
   end
 end

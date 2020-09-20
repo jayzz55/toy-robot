@@ -13,6 +13,8 @@ module Validators
 
       MAPPINGS = {
         Constants::PLACE => :validate_placement_args,
+        Constants::PLACE_OBSTACLE => :no_validation,
+        Constants::FIND_PATH => :no_validation,
         Constants::MOVE => :validate_no_args,
         Constants::LEFT => :validate_no_args,
         Constants::RIGHT => :validate_no_args,
@@ -51,6 +53,10 @@ module Validators
         else
           Success(args)
         end
+      end
+
+      def no_validation(args)
+        Success(args)
       end
 
       def validate_placement_direction(args)

@@ -10,6 +10,7 @@ module Handlers
       # rubocop:disable Metrics/MethodLength
       def call(output: $stdout)
         result = Try { yield }.to_result.flatten
+        binding.pry if result.failure?
         return :ok if result.success?
 
         case result.failure

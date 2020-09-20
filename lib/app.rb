@@ -17,13 +17,14 @@ class App
   DEFAULT_TABLE = Models::Table.new
 
   attr_reader :table, :output, :representer
-  attr_accessor :robot
+  attr_accessor :robot, :obstacles
 
   def initialize(robot: nil, table: DEFAULT_TABLE, output: $stdout, representer: Representers::StringRepresenter)
     @robot = robot
     @table = table
     @output = output
     @representer = representer
+    @obstacles = []
   end
 
   def call(input_string)

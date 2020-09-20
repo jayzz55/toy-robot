@@ -12,10 +12,12 @@ Create an application that can read in commands of the following form:
 
 ```plain
 PLACE X,Y,F
+PLACE_OBSTACLE X,Y
 MOVE
 LEFT
 RIGHT
 REPORT
+FIND_PATH X,Y
 ```
 
 - PLACE will put the toy robot on the table in position X,Y and facing NORTH, SOUTH, EAST or WEST.

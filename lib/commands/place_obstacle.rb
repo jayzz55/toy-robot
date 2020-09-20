@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
 require 'dry/monads'
-require 'models/robot'
+require 'models/obstacle'
 require 'models/coordinate'
 
 module Commands
-  class Place
+  class PlaceObstacle
     include Dry::Monads[:result]
 
     attr_reader :table, :app
@@ -15,10 +15,13 @@ module Commands
       @app = app
     end
 
-    def call(robot:)
-      if table.contain?(robot.coordinate) && !app.obstacles.map(&:coordinate).include?(robot.coordinate)
-        app.robot = robot
-        Success(robot)
+    def call(obstacle:)
+      if table.contain?(obstacle.coordinate) &&
+          obstacle.coordinate != app.robot.coordinate &&
+          !app.obstacles.map(&:coordinate).include?(obstacle.coordinate)
+
+        app.obstacles << obstacle
+        Success(obstacle)
       else
         Failure(:invalid_placement)
       end
